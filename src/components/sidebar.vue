@@ -66,7 +66,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed } from "vue";
 import { useSidebarStore } from "../store/sidebar";
 import { useRoute } from "vue-router";
@@ -75,13 +75,13 @@ const items = [
   {
     icon: "Odometer",
     index: "/dashboard",
-    title: "系统首页",
+    title: "实体识别",
     permiss: "1",
   },
   {
-    icon: "DocumentCopy",
+    icon: "Search",
     index: "/tabs",
-    title: "实体识别",
+    title: "实体查询",
     permiss: "3",
   },
   // {
@@ -120,27 +120,27 @@ const items = [
   //   ],
   // },
   {
-    icon: "Setting",
+    icon: "Connection",
     index: "/icon",
-    title: "实体查询",
+    title: "关系查询",
     permiss: "10",
   },
   {
-    icon: "PieChart",
+    icon: "ChatLineRound",
     index: "/charts",
-    title: "关系查询",
+    title: "核安全问答",
     permiss: "11",
   },
   {
-    icon: "Warning",
+    icon: "MagicStick",
     index: "/permission",
-    title: "核安全问答",
+    title: "案例分析",
     permiss: "13",
   },
   {
-    icon: "CoffeeCup",
+    icon: "DocumentRemove",
     index: "/donate",
-    title: "案例分析",
+    title: "问题模板",
     permiss: "14",
   },
 ];

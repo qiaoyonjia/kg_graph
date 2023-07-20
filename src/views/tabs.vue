@@ -1,6 +1,6 @@
 <template>
-	<div class="container">
-		<el-tabs v-model="message">
+  <div class="container">
+    <!-- <el-tabs v-model="message">
 			<el-tab-pane :label="`未读消息(${state.unread.length})`" name="first">
 				<el-table :data="state.unread" :show-header="false" style="width: 100%">
 					<el-table-column>
@@ -59,58 +59,66 @@
 					</div>
 				</template>
 			</el-tab-pane>
-		</el-tabs>
-	</div>
+		</el-tabs> -->
+    <HeaderContent>
+      <template #icon>
+        <el-icon><Search /></el-icon>
+      </template>
+
+      <template #text> 实体查询 </template>
+    </HeaderContent>
+  </div>
 </template>
 
 <script setup lang="ts" name="tabs">
-import { ref, reactive } from 'vue';
+import { ref, reactive } from "vue";
+import HeaderContent from "../components/headerContent.vue";
 
-const message = ref('first');
-const state = reactive({
-	unread: [
-		{
-			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-		},
-		{
-			date: '2018-04-19 21:00:00',
-			title: '今晚12点整发大红包，先到先得'
-		}
-	],
-	read: [
-		{
-			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-		}
-	],
-	recycle: [
-		{
-			date: '2018-04-19 20:00:00',
-			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-		}
-	]
-});
+// const message = ref('first');
+// const state = reactive({
+// 	unread: [
+// 		{
+// 			date: '2018-04-19 20:00:00',
+// 			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+// 		},
+// 		{
+// 			date: '2018-04-19 21:00:00',
+// 			title: '今晚12点整发大红包，先到先得'
+// 		}
+// 	],
+// 	read: [
+// 		{
+// 			date: '2018-04-19 20:00:00',
+// 			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+// 		}
+// 	],
+// 	recycle: [
+// 		{
+// 			date: '2018-04-19 20:00:00',
+// 			title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+// 		}
+// 	]
+// });
 
-const handleRead = (index: number) => {
-	const item = state.unread.splice(index, 1);
-	state.read = item.concat(state.read);
-};
-const handleDel = (index: number) => {
-	const item = state.read.splice(index, 1);
-	state.recycle = item.concat(state.recycle);
-};
-const handleRestore = (index: number) => {
-	const item = state.recycle.splice(index, 1);
-	state.read = item.concat(state.read);
-};
+// const handleRead = (index: number) => {
+// 	const item = state.unread.splice(index, 1);
+// 	state.read = item.concat(state.read);
+// };
+// const handleDel = (index: number) => {
+// 	const item = state.read.splice(index, 1);
+// 	state.recycle = item.concat(state.recycle);
+// };
+// const handleRestore = (index: number) => {
+// 	const item = state.recycle.splice(index, 1);
+// 	state.read = item.concat(state.read);
+// };
 </script>
 
 <style>
-.message-title {
+/* .message-title {
 	cursor: pointer;
 }
 .handle-row {
 	margin-top: 30px;
-}
+} */
 </style>

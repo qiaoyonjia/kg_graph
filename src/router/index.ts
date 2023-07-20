@@ -16,47 +16,27 @@ const routes: RouteRecordRaw[] = [
         path: "/dashboard",
         name: "dashboard",
         meta: {
-          title: "系统首页",
+          title: "实体识别",
           permiss: "1",
         },
         component: () =>
           import(/* webpackChunkName: "dashboard" */ "../views/dashboard.vue"),
       },
-      // {
-      //   path: "/table",
-      //   name: "basetable",
-      //   meta: {
-      //     title: "表格",
-      //     permiss: "2",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "table" */ "../views/table.vue"),
-      // },
       {
         path: "/charts",
         name: "basecharts",
         meta: {
-          title: "关系查询",
+          title: "核安全问答",
           permiss: "11",
         },
         component: () =>
           import(/* webpackChunkName: "charts" */ "../views/charts.vue"),
       },
-      // {
-      //   path: "/form",
-      //   name: "baseform",
-      //   meta: {
-      //     title: "表单",
-      //     permiss: "5",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "form" */ "../views/form.vue"),
-      // },
       {
         path: "/tabs",
         name: "tabs",
         meta: {
-          title: "实体识别",
+          title: "实体查询",
           permiss: "3",
         },
         component: () =>
@@ -66,7 +46,7 @@ const routes: RouteRecordRaw[] = [
         path: "/donate",
         name: "donate",
         meta: {
-          title: "案例分析",
+          title: "问题模板",
           permiss: "14",
         },
         component: () =>
@@ -76,7 +56,7 @@ const routes: RouteRecordRaw[] = [
         path: "/permission",
         name: "permission",
         meta: {
-          title: "核安全问答",
+          title: "案例分析",
           permiss: "13",
         },
         component: () =>
@@ -84,21 +64,11 @@ const routes: RouteRecordRaw[] = [
             /* webpackChunkName: "permission" */ "../views/permission.vue"
           ),
       },
-      // {
-      //   path: "/upload",
-      //   name: "upload",
-      //   meta: {
-      //     title: "上传插件",
-      //     permiss: "6",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "upload" */ "../views/upload.vue"),
-      // },
       {
         path: "/icon",
         name: "icon",
         meta: {
-          title: "实体查询",
+          title: "关系查询",
           permiss: "10",
         },
         component: () =>
@@ -113,46 +83,6 @@ const routes: RouteRecordRaw[] = [
         component: () =>
           import(/* webpackChunkName: "user" */ "../views/user.vue"),
       },
-      // {
-      //   path: "/editor",
-      //   name: "editor",
-      //   meta: {
-      //     title: "富文本编辑器",
-      //     permiss: "8",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "editor" */ "../views/editor.vue"),
-      // },
-      // {
-      //   path: "/markdown",
-      //   name: "markdown",
-      //   meta: {
-      //     title: "markdown编辑器",
-      //     permiss: "9",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "markdown" */ "../views/markdown.vue"),
-      // },
-      // {
-      //   path: "/export",
-      //   name: "export",
-      //   meta: {
-      //     title: "导出Excel",
-      //     permiss: "2",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "export" */ "../views/export.vue"),
-      // },
-      // {
-      //   path: "/import",
-      //   name: "import",
-      //   meta: {
-      //     title: "导入Excel",
-      //     permiss: "2",
-      //   },
-      //   component: () =>
-      //     import(/* webpackChunkName: "import" */ "../views/import.vue"),
-      // },
     ],
   },
   {
