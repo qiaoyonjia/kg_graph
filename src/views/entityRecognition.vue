@@ -66,7 +66,7 @@
   </div>
 </template>
 
-<script setup name="dashboard">
+<script setup name="entityRecognition">
 import HeaderContent from "../components/headerContent.vue";
 import { reactive, ref } from "vue";
 import { getEntityData } from "../api/entity";

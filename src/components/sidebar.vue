@@ -74,7 +74,7 @@ import { useRoute } from "vue-router";
 const items = [
   {
     icon: "Odometer",
-    index: "/dashboard",
+    index: "/entityRecognition",
     title: "实体识别",
     permiss: "1",
   },

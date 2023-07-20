@@ -5,7 +5,7 @@ import Home from "../views/home.vue";
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/entityRecognition",
   },
   {
     path: "/",
@@ -13,14 +13,16 @@ const routes: RouteRecordRaw[] = [
     component: Home,
     children: [
       {
-        path: "/dashboard",
-        name: "dashboard",
+        path: "/entityRecognition",
+        name: "entityRecognition",
         meta: {
           title: "实体识别",
           permiss: "1",
         },
         component: () =>
-          import(/* webpackChunkName: "dashboard" */ "../views/dashboard.vue"),
+          import(
+            /* webpackChunkName: "entityRecognition" */ "../views/entityRecognition.vue"
+          ),
       },
       {
         path: "/charts",

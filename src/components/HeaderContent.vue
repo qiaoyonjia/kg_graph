@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup name="dashboard"></script>
+<script setup name="entityRecognition"></script>
 
 <style scoped>
 .header {
