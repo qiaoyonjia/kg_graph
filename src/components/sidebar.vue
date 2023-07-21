@@ -84,47 +84,6 @@ const items = [
     title: "实体查询",
     permiss: "3",
   },
-  // {
-  //   icon: "Edit",
-  //   index: "3",
-  //   title: "表单相关",
-  //   permiss: "4",
-  //   subs: [
-  //     {
-  //       index: "/form",
-  //       title: "基本表单",
-  //       permiss: "5",
-  //     },
-  //     {
-  //       index: "/upload",
-  //       title: "文件上传",
-  //       permiss: "6",
-  //     },
-  //     {
-  //       index: "4",
-  //       title: "三级菜单",
-  //       permiss: "7",
-  //       subs: [
-  //         {
-  //           index: "/editor",
-  //           title: "富文本编辑器",
-  //           permiss: "8",
-  //         },
-  //         {
-  //           index: "/markdown",
-  //           title: "markdown编辑器",
-  //           permiss: "9",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
-  {
-    icon: "Connection",
-    index: "/icon",
-    title: "关系查询",
-    permiss: "10",
-  },
   {
     icon: "ChatLineRound",
     index: "/question",
@@ -139,7 +98,7 @@ const items = [
   },
   {
     icon: "DocumentRemove",
-    index: "/donate",
+    index: "/template",
     title: "问题模板",
     permiss: "14",
   },

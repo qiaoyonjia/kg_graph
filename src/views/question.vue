@@ -34,6 +34,16 @@
             @click="textBtn(button.text)"
             >{{ button.text }}</el-button
           >
+          <router-link to="/template">
+            <el-button
+              style="float: right; margin-right: 20px"
+              text
+              @click="navToTemplate"
+            >
+              <el-icon><Link /></el-icon>
+              模板
+            </el-button></router-link
+          >
         </div>
       </el-card>
       <div class="result-box" v-if="showGraph">

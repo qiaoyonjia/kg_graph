@@ -47,14 +47,14 @@ const routes: RouteRecordRaw[] = [
           ),
       },
       {
-        path: "/donate",
-        name: "donate",
+        path: "/template",
+        name: "template",
         meta: {
           title: "问题模板",
           permiss: "14",
         },
         component: () =>
-          import(/* webpackChunkName: "donate" */ "../views/donate.vue"),
+          import(/* webpackChunkName: "template" */ "../views/template.vue"),
       },
       {
         path: "/permission",
@@ -67,16 +67,6 @@ const routes: RouteRecordRaw[] = [
           import(
             /* webpackChunkName: "permission" */ "../views/permission.vue"
           ),
-      },
-      {
-        path: "/icon",
-        name: "icon",
-        meta: {
-          title: "关系查询",
-          permiss: "10",
-        },
-        component: () =>
-          import(/* webpackChunkName: "icon" */ "../views/icon.vue"),
       },
       {
         path: "/user",
