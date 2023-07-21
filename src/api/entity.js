@@ -9,3 +9,13 @@ export const getEntityData = (text) => {
     },
   });
 };
+
+export const getEntity = (text) => {
+  return request({
+    url: "/search_entity",
+    method: "get",
+    params: {
+      text,
+    },
+  });
+};

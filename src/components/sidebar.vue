@@ -80,7 +80,7 @@ const items = [
   },
   {
     icon: "Search",
-    index: "/tabs",
+    index: "/entitySearch",
     title: "实体查询",
     permiss: "3",
   },

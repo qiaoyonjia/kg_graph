@@ -1,23 +1,63 @@
 <template>
-  <div class="knowledge-graph-container">
-    <div id="graph" style="width: 90%; height: 600px"></div>
+  <div class="container">
+    <HeaderContent>
+      <template #icon>
+        <el-icon><Search /></el-icon>
+      </template>
+
+      <template #text> 实体查询 </template>
+    </HeaderContent>
+    <div class="content">
+      <el-card class="input-box-card">
+        <template #header>
+          <div class="card-header">
+            <span>查询条件:</span>
+          </div>
+        </template>
+        <div class="search-box">
+          <el-input v-model="textarea" placeholder="请输入实体名称" />
+          <el-button
+            type="primary"
+            class="search-btn"
+            size="large"
+            @click="genGraphBtn"
+            >查询</el-button
+          >
+        </div>
+        <div v-if="showGraph">
+          <div id="graph" style="width: 90%; height: 600px"></div>
+          <el-table :data="tableDataRes" style="width: 90%">
+            <el-table-column prop="entity1" label="Entity1" width="180" />
+            <el-table-column prop="relation" label="Relation" width="180" />
+            <el-table-column prop="entity2" label="Entity2" />
+          </el-table>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
-import * as echarts from "echarts";
+<script setup name="entityRecognition">
+import HeaderContent from "../components/headerContent.vue";
+import { ref, reactive } from "vue";
 import { getEntity } from "../api/entity";
 import { processInitialData } from "../utils/processData";
+import * as echarts from "echarts";
 
-// 在 mounted 钩子中绘制图谱
-onMounted(async () => {
-  let word = "原子弹";
-  const res = await getEntity(word);
-  const { data, links } = processInitialData(res.data, word);
+let textarea = ref("");
+let showGraph = ref(false);
+let tableDataRes = reactive([]);
 
+const genGraphBtn = async () => {
+  showGraph.value = true;
+
+  const res = await getEntity(textarea.value);
   var myChart = echarts.init(document.getElementById("graph"));
-
+  const { data, links, tableData } = processInitialData(
+    res.data,
+    textarea.value
+  );
+  Object.assign(tableDataRes, tableData);
   let option = {
     title: {
       text: "",
@@ -108,12 +148,26 @@ onMounted(async () => {
 
   // 使用刚指定的配置项和数据显示图表。
   myChart.setOption(option);
-});
+};
 </script>
 
-<style>
-.knowledge-graph-container {
-  width: 100%;
-  height: 100%;
+<style scoped lang="less">
+.container {
+  width: 80%;
+  margin: auto;
+
+  .content {
+    margin-top: 20px;
+    margin-left: -10px;
+
+    .search-box {
+      display: flex;
+    }
+
+    .search-btn {
+      width: 100px;
+      margin-left: 10px;
+    }
+  }
 }
 </style>

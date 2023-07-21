@@ -92,7 +92,7 @@ const submitTextBtn = async () => {
   const filteredData = res.data.filter((item, index, arr) => {
     return arr.findIndex((otherItem) => otherItem.name === item.name) === index;
   });
-  console.log(filteredData);
+  // console.log(filteredData);
   result.value = filteredData;
 
   isLoading.value = false;

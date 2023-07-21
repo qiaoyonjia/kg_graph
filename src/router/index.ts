@@ -35,14 +35,16 @@ const routes: RouteRecordRaw[] = [
           import(/* webpackChunkName: "charts" */ "../views/charts.vue"),
       },
       {
-        path: "/tabs",
-        name: "tabs",
+        path: "/entitySearch",
+        name: "entitySearch",
         meta: {
           title: "实体查询",
           permiss: "3",
         },
         component: () =>
-          import(/* webpackChunkName: "tabs" */ "../views/tabs.vue"),
+          import(
+            /* webpackChunkName: "entitySearch" */ "../views/entitySearch.vue"
+          ),
       },
       {
         path: "/donate",
