@@ -127,7 +127,7 @@ const items = [
   },
   {
     icon: "ChatLineRound",
-    index: "/charts",
+    index: "/question",
     title: "核安全问答",
     permiss: "11",
   },

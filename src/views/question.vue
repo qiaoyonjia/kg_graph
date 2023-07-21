@@ -2,37 +2,64 @@
   <div class="container">
     <HeaderContent>
       <template #icon>
-        <el-icon><Search /></el-icon>
+        <el-icon><ChatRound /></el-icon>
       </template>
 
-      <template #text> 实体查询 </template>
+      <template #text> 核安全问答 </template>
     </HeaderContent>
     <div class="content">
       <el-card class="input-box-card">
         <template #header>
           <div class="card-header">
-            <span>查询条件:</span>
+            <span>输入问题:</span>
           </div>
         </template>
         <div class="search-box">
-          <el-input v-model="textarea" placeholder="请输入实体名称" />
+          <el-input v-model="inputValue" placeholder="请输入问题" />
           <el-button
             type="primary"
             class="search-btn"
             size="large"
             @click="genGraphBtn"
-            >查询</el-button
+            >提交</el-button
           >
         </div>
-        <div v-if="showGraph">
-          <div id="graph" style="width: 90%; height: 600px"></div>
-          <el-table :data="tableDataRes" style="width: 90%">
-            <el-table-column prop="entity1" label="Entity1" width="180" />
-            <el-table-column prop="relation" label="Relation" width="180" />
-            <el-table-column prop="entity2" label="Entity2" />
-          </el-table>
+        <div style="margin-top: 10px">
+          你可能想搜索：
+          <el-button
+            v-for="button in buttons"
+            :key="button.text"
+            :type="button.type"
+            text
+            @click="textBtn(button.text)"
+            >{{ button.text }}</el-button
+          >
         </div>
       </el-card>
+      <div class="result-box" v-if="showGraph">
+        <el-card class="res-box-card">
+          <div class="card-header">
+            <span>答案:</span>
+            <el-divider />
+            <el-row>
+              <el-col v-for="(item, index) in dataList" :key="index" :span="24">
+                <div class="data-item">
+                  {{ item }}
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+        <el-card class="graph-box-card">
+          <template #header>
+            <div class="card-header">
+              <span>图谱演示:</span>
+              <el-divider />
+              <div id="graph" style="height: 600px"></div>
+            </div>
+          </template>
+        </el-card>
+      </div>
     </div>
   </div>
 </template>
@@ -40,24 +67,34 @@
 <script setup name="entityRecognition">
 import HeaderContent from "../components/headerContent.vue";
 import { ref, reactive } from "vue";
-import { getEntity } from "../api/entity";
-import { processInitialData } from "../utils/processData";
+import { processQuestionData } from "../utils/processData";
 import * as echarts from "echarts";
+import { getQuestionResult } from "../api/question";
 
-let textarea = ref("");
+let inputValue = ref("");
+let dataList = reactive([]);
 let showGraph = ref(false);
-let tableDataRes = reactive([]);
+
+const buttons = [
+  { type: "primary", text: "对于申领《放射工作人员证》的人员有什么要求？" },
+  { type: "primary", text: "核壳层模型有什么应用？" },
+  { type: "primary", text: "粒子加速器分类为" },
+];
+
+const textBtn = (text) => {
+  inputValue.value = text;
+};
 
 const genGraphBtn = async () => {
   showGraph.value = true;
+  const res = await getQuestionResult(inputValue.value);
+  const { answer, list } = res.data;
 
-  const res = await getEntity(textarea.value);
+  const { data, links } = processQuestionData(list);
+
   var myChart = echarts.init(document.getElementById("graph"));
-  const { data, links, tableData } = processInitialData(
-    res.data,
-    textarea.value
-  );
-  Object.assign(tableDataRes, tableData);
+
+  Object.assign(dataList, answer);
   let option = {
     title: {
       text: "",
@@ -81,21 +118,13 @@ const genGraphBtn = async () => {
       {
         type: "graph",
         layout: "force",
-        symbolSize: 60,
+        symbolSize: 60, // 节点的大小
         focusNodeAdjacency: true,
         roam: true,
         edgeSymbol: ["none", "arrow"],
         categories: [
           {
-            name: "查询实体",
-            itemStyle: {
-              normal: {
-                color: "#009800",
-              },
-            },
-          },
-          {
-            name: "HudongItem",
+            name: "对象",
             itemStyle: {
               normal: {
                 color: "#4592FF",
@@ -103,7 +132,7 @@ const genGraphBtn = async () => {
             },
           },
           {
-            name: "NewNode",
+            name: "内容",
             itemStyle: {
               normal: {
                 color: "#C71585",
@@ -120,7 +149,7 @@ const genGraphBtn = async () => {
           },
         },
         force: {
-          repulsion: 2000,
+          repulsion: 2000, // 值越大节点之间的间距越大
         },
         edgeSymbolSize: [4, 50],
         edgeLabel: {
@@ -145,7 +174,6 @@ const genGraphBtn = async () => {
       },
     ],
   };
-
   // 使用刚指定的配置项和数据显示图表。
   myChart.setOption(option);
 };
@@ -167,6 +195,30 @@ const genGraphBtn = async () => {
     .search-btn {
       width: 100px;
       margin-left: 10px;
+    }
+
+    .result-box {
+      display: flex;
+      margin-top: 30px;
+
+      .res-box-card {
+        width: 30%;
+        margin-right: 30px;
+
+        .data-item {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          color: #797979;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #dddddd;
+        }
+      }
+
+      .graph-box-card {
+        flex: 1;
+      }
     }
   }
 }

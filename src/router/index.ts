@@ -25,14 +25,14 @@ const routes: RouteRecordRaw[] = [
           ),
       },
       {
-        path: "/charts",
+        path: "/question",
         name: "basecharts",
         meta: {
           title: "核安全问答",
           permiss: "11",
         },
         component: () =>
-          import(/* webpackChunkName: "charts" */ "../views/charts.vue"),
+          import(/* webpackChunkName: "question" */ "../views/question.vue"),
       },
       {
         path: "/entitySearch",

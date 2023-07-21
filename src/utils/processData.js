@@ -70,3 +70,89 @@ export const processInitialData = (entityRelation, word) => {
     tableData,
   };
 };
+
+export const processQuestionData = (list) => {
+  var data = [];
+  var links = [];
+
+  //构造数据
+  var id = 0;
+  for (var i = 0; i < list.length; i++) {
+    let node1 = {};
+
+    let entity1 = list[i].entity1;
+    node1["name"] = entity1;
+    node1["draggable"] = true;
+    if (list[i].entity1_type === "对象") {
+      node1["category"] = 0;
+    } else if (list[i].entity1_type === "内容") {
+      node1["category"] = 1;
+    }
+
+    let nodeId = id.toString();
+    var flag = 1;
+    for (var j = 0; j < data.length; j++) {
+      if (data[j].name === node1["name"]) {
+        flag = 0;
+        nodeId = data[j].id;
+        break;
+      }
+    }
+
+    node1["id"] = nodeId;
+    if (flag === 1) {
+      id++;
+      data.push(node1);
+    }
+
+    let node2 = {};
+    node2["name"] = list[i].entity2;
+    node2["draggable"] = true;
+    if (list[i].entity2_type === "对象") {
+      node2["category"] = 0;
+    } else if (list[i].entity2_type === "内容") {
+      node2["category"] = 1;
+    }
+
+    nodeId = id.toString();
+
+    var flag = 1;
+    for (var j = 0; j < data.length; j++) {
+      if (data[j].name === node2["name"]) {
+        flag = 0;
+        nodeId = data[j]["id"];
+        break;
+      }
+    }
+
+    node2["id"] = nodeId;
+    if (flag === 1) {
+      id++;
+      data.push(node2);
+    }
+
+    //  relation
+    let relation = {};
+    relation["source"] = node1["id"];
+    relation["target"] = node2["id"];
+    relation["category"] = 0;
+
+    var flag = 1;
+    for (var j = 0; j < links.length; j++) {
+      if (
+        links[j]["source"] === relation["source"] &&
+        links[j]["target"] === relation["target"]
+      ) {
+        flag = 0;
+        break;
+      }
+    }
+    if (flag === 1) {
+      relation["value"] = list[i].rel;
+      relation["symbolSize"] = 10;
+      links.push(relation);
+    }
+  }
+
+  return { data, links };
+};
