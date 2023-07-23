@@ -1,137 +1,103 @@
 <template>
-	<div class="container">
-		<div class="plugins-tips">通过 v-permiss 自定义指令实现权限管理，使用非 admin 账号登录，可查看效果。</div>
-		<div class="mgb20">
-			<span class="label">角色：</span>
-			<el-select v-model="role" @change="handleChange">
-				<el-option label="超级管理员" value="admin"></el-option>
-				<el-option label="普通用户" value="user"></el-option>
-			</el-select>
-		</div>
-		<div class="mgb20 tree-wrapper">
-			<el-tree
-				ref="tree"
-				:data="data"
-				node-key="id"
-				default-expand-all
-				show-checkbox
-				:default-checked-keys="checkedKeys"
-			/>
-		</div>
-		<el-button type="primary" @click="onSubmit">保存权限</el-button>
-	</div>
+  <div class="container">
+    <HeaderContent>
+      <template #icon>
+        <el-icon><Search /></el-icon>
+      </template>
+
+      <template #text> 核安全案例分析 </template>
+    </HeaderContent>
+    <div class="content">
+      <el-card class="input-box-card">
+        <template #header>
+          <div class="card-header">
+            <span>请输入你的问题:</span>
+          </div>
+        </template>
+        <div class="search-box">
+          <el-input
+            v-model="text"
+            placeholder="提出你的想法"
+            style="height: 50px"
+            @keyup.enter="btnClick"
+          />
+          <el-button
+            type="primary"
+            :icon="Search"
+            circle
+            size="large"
+            class="submit-button"
+            @click="btnClick"
+          />
+        </div>
+      </el-card>
+      <el-card class="input-box-card2">
+        <div
+          v-for="(item, index) in answerLists"
+          :key="index"
+          style="margin-bottom: 20px"
+        >
+          <el-card>
+            <div
+              style="display: flex; align-items: center; margin-bottom: 20px"
+            >
+              <el-button type="primary" :icon="Avatar" circle />
+              <span style="margin-left: 10px">{{ item.question }}</span>
+            </div>
+            {{ item.answer }}
+          </el-card>
+        </div>
+      </el-card>
+    </div>
+  </div>
 </template>
 
-<script setup lang="ts" name="permission">
-import { ref } from 'vue';
-import { ElTree } from 'element-plus';
-import { usePermissStore } from '../store/permiss';
+<script setup name="entityRecognition">
+import HeaderContent from "../components/headerContent.vue";
+import { Search, Avatar } from "@element-plus/icons-vue";
+import { ref, reactive } from "vue";
+import { getChatGLMRes } from "../api/chatGLM";
 
-const role = ref<string>('admin');
+let text = ref("");
+let answerLists = reactive([]);
 
-interface Tree {
-	id: string;
-	label: string;
-	children?: Tree[];
-}
-
-const data: Tree[] = [
-	{
-		id: '1',
-		label: '系统首页'
-	},
-	{
-		id: '2',
-		label: '基础表格',
-		children: [
-			{
-				id: '15',
-				label: '编辑'
-			},
-			{
-				id: '16',
-				label: '删除'
-			}
-		]
-	},
-	{
-		id: '3',
-		label: 'tab选项卡'
-	},
-	{
-		id: '4',
-		label: '表单相关',
-		children: [
-			{
-				id: '5',
-				label: '基本表单'
-			},
-			{
-				id: '6',
-				label: '文件上传'
-			},
-			{
-				id: '7',
-				label: '三级菜单',
-				children: [
-					{
-						id: '8',
-						label: '富文本编辑器'
-					},
-					{
-						id: '9',
-						label: 'markdown编辑器'
-					}
-				]
-			}
-		]
-	},
-	{
-		id: '10',
-		label: '自定义图标'
-	},
-	{
-		id: '11',
-		label: 'schart图表'
-	},
-
-	{
-		id: '13',
-		label: '权限管理'
-	},
-	{
-		id: '14',
-		label: '支持作者'
-	}
-];
-
-const permiss = usePermissStore();
-
-// 获取当前权限
-const checkedKeys = ref<string[]>([]);
-const getPremission = () => {
-	// 请求接口返回权限
-	checkedKeys.value = permiss.defaultList[role.value];
-};
-getPremission();
-
-// 保存权限
-const tree = ref<InstanceType<typeof ElTree>>();
-const onSubmit = () => {
-	// 获取选中的权限
-	console.log(tree.value!.getCheckedKeys(false));
-};
-
-const handleChange = (val: string[]) => {
-	tree.value!.setCheckedKeys(permiss.defaultList[role.value]);
+const btnClick = async () => {
+  const result = await getChatGLMRes(text.value);
+  let pushData = {
+    answer: result.data,
+    question: text.value,
+  };
+  answerLists.unshift(pushData);
+  text.value = "";
 };
 </script>
 
-<style scoped>
-.tree-wrapper {
-	max-width: 500px;
-}
-.label {
-	font-size: 14px;
+<style scoped lang="less">
+.container {
+  width: 80%;
+  margin: auto;
+
+  .content {
+    margin-top: 20px;
+    margin-left: -10px;
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .submit-button {
+        margin-left: 20px;
+      }
+    }
+
+    .input-box-card2 {
+      overflow-y: auto; /* 显示垂直滚动条 */
+
+      padding-bottom: 20px;
+      margin-top: 20px;
+      height: 400px;
+    }
+  }
 }
 </style>
